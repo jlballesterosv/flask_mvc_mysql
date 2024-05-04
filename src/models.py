@@ -7,6 +7,8 @@ class Profile(db.Model):
     # first_name: Used to store the first name if the user
     # last_name: Used to store last name of the user
     # Age: Used to store the age of the user
+    
+    __tablename__ = 'Profile'
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), unique=False, nullable=False)
     last_name = db.Column(db.String(20), unique=False, nullable=False)
