@@ -33,10 +33,16 @@ class Productos(Base):
         self.cantidad_stock=cantidad_stock
         self.categoria=categoria
         
-    def getAll():
+    def obtener_todos():
         session = Session()
         productos = session.query(Productos).all()              
         return productos
+
+    def agregar_producto(producto):
+        session = Session()
+        producto = session.add(producto)        
+        session.commit()
+        return producto
 
 class Categorias(Base):    
     __tablename__ = 'categorias'
@@ -44,15 +50,12 @@ class Categorias(Base):
     categoria = Column(String(128), unique=True, nullable=False)
     
     def __init__(self,categoria):
-        self.categoria=categoria
-    
+        self.categoria=categoria   
         
-    def getAll():
+    def obtener_todos():
         session = Session()
-        productos = session.query(Productos).all()
-        print ("Hola")
-        print(productos)
-        return productos
+        categorias = session.query(Categorias).all()
+        return categorias
         
 class Clientes(Base):    
     __tablename__ = 'clientes'
@@ -68,4 +71,9 @@ class Clientes(Base):
         self.identificacion=identificacion
         self.direccion=direccion
         self.telefono=telefono
-        self.email=email
+        self.email=email 
+        
+    def obtener_todos():
+        session = Session()
+        clientes = session.query(Clientes).all()
+        return clientes

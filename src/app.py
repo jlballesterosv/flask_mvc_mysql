@@ -6,6 +6,7 @@ from models import Base, engine
 
  
 app = Flask(__name__)
+app.secret_key = 'llave_para_sesion'
 app.debug = True
 from controllers import *
 Base.metadata.create_all(engine)
