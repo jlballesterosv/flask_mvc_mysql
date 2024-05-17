@@ -1,6 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash
-from app import app
-from models import *
+from src.models.productos import Productos
+from src.models.categorias import Categorias
+from src.models.clientes import Clientes
+from src.app import app
 
 @app.route("/")
 def index():
