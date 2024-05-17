@@ -20,3 +20,8 @@ class Clientes(Base):
     def obtener_todos():
         clientes = session.query(Clientes).all()
         return clientes
+    
+    def agregar(cliente):
+        cliente = session.add(cliente)        
+        session.commit()
+        return cliente

@@ -1,4 +1,3 @@
-
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from src.models import session, Base
 
@@ -22,7 +21,7 @@ class Productos(Base):
         productos = session.query(Productos).all()              
         return productos
 
-    def agregar_producto(producto):
+    def agregar(producto):
         producto = session.add(producto)        
         session.commit()
         return producto
