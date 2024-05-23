@@ -3,8 +3,14 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_controller import FlaskController
 from src.models.productos import Productos
 from src.models.categorias import Categorias
-
+from flask_restful import Api
+from src.api.productos_api import ProductosApi
 class ProductosController(FlaskController):
+    
+    api = Api(app)
+    
+    api.add_resource(ProductosApi, '/api/productos')
+    
     @app.route("/productos")
     def productos():
         productos = Productos.obtener_todos()
