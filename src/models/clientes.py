@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String
 from src.models import session, Base
+from sqlalchemy_serializer import SerializerMixin
 
-class Clientes(Base):    
+class Clientes(Base, SerializerMixin):    
     __tablename__ = 'clientes'
     id = Column(Integer, primary_key=True)
     nombre = Column(String(100), unique=True, nullable=False)
@@ -20,6 +21,10 @@ class Clientes(Base):
     def obtener_todos():
         clientes = session.query(Clientes).all()
         return clientes
+        
+    def obtener_por_id(id):
+        cliente = session.query(Clientes).get(id)
+        return cliente.to_dict()
     
     def agregar(cliente):
         cliente = session.add(cliente)        

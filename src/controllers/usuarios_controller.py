@@ -7,7 +7,12 @@ class UsuariosController(FlaskController):
     @app.route("/usuarios")
     def usuarios():
         usuarios = Usuarios.obtener_todos()
-        return render_template('usuarios.html', titulo="Lista de Usuarios", usuarios=usuarios)
+        return render_template('usuarios.html', titulo="Lista de Usuarios", usuarios=usuarios)    
+    
+    @app.route("/usuarios/<id>")
+    def usuario_por_id(id):
+        usuario = Usuarios.obtener_por_id(id)        
+        return usuario
 
     @app.route("/agregar_usuario", methods=['GET','POST'])
     def agregar_usuario():

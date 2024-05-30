@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+<h1>{{titulo}}</h1>
+<br>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+  <form action="agregar_factura" method="post">
+    <div class="form-row">      
+      <div class="form-group col-md-4">
+        <label for="fecha">Fecha</label>
+        <input type="text" class="form-control" id="fecha" name="fecha" value="{{fecha}}" readonly>
+      </div>      
+      <div class="form-group col-md-4">
+        <label for="cliente">Cliente</label>
+        <select id="cliente" name="cliente" class="form-control">
+          <option selected value="">Seleccione...</option>
+          {% for cliente in clientes %}
+            <option value="{{cliente.id}}">{{cliente.identificacion}}</option>
+          {% endfor %}
+        </select>
+      </div>           
+      <div class="form-group col-md-4">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" disabled>
+      </div>            
+      <div class="form-group col-md-4">
+        <label for="direccion">Dirección</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" disabled>
+      </div>            
+      <div class="form-group col-md-4">
+        <label for="telefono">Teléfono</label>
+        <input type="text" class="form-control" id="telefono" name="telefono" disabled>
+      </div>             
+      <div class="form-group col-md-4">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" name="email" disabled>
+      </div>      
+    </div>
+    
+    <div class="form-row">          
+      <div class="form-group col-md-4">
+        <label for="usuario">Vendedor</label>
+        <select id="usuario" name="usuario" class="form-control">
+          <option selected value="">Seleccione...</option>
+          {% for usuario in usuarios %}
+            <option value="{{usuario.id}}">{{usuario.usuario}}</option>
+          {% endfor %}
+        </select>
+      </div>           
+      <div class="form-group col-md-4">
+        <label for="nombre_usuario">Nombre</label>
+        <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" disabled>
+      </div>            
+      <div class="form-group col-md-4">
+        <label for="rol">Rol</label>
+        <input type="text" class="form-control" id="rol" name="rol" disabled>
+      </div>  
+    </div> 
+    <button type="submit" class="btn btn-primary">Crear</button>
+  </form>
+  <script>
+    $('#cliente').change(function() {
+      value = $(this).val();
+      $.ajax({
+        type: "GET",
+        url: "/clientes/" + value,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result) {
+          console.log("Result:");
+          console.log(result);
+          $('#nombre').val(result.nombre);
+          $('#direccion').val(result.direccion);
+          $('#telefono').val(result.telefono);
+          $('#email').val(result.email);
+        } 
+      });
+    });
+    
+    $('#usuario').change(function() {
+      value = $(this).val();
+      $.ajax({
+        type: "GET",
+        url: "/usuarios/" + value,
+        data: JSON.stringify(cliente),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(result) {
+          console.log("Result:");
+          console.log(result);
+          $('#nombre_usuario').val(result.nombre);
+          $('#rol').val(result.rol);
+        } 
+      });
+    });
+  </script>
+{% endblock %}

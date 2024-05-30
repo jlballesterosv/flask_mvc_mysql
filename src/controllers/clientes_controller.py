@@ -8,6 +8,11 @@ class ClientesController(FlaskController):
     def clientes():
         clientes = Clientes.obtener_todos()
         return render_template('clientes.html', titulo="Lista de Clientes", clientes=clientes)
+    
+    @app.route("/clientes/<id>")
+    def cliente_por_id(id):
+        cliente = Clientes.obtener_por_id(id)
+        return cliente
 
     @app.route("/agregar_cliente", methods=['GET','POST'])
     def agregar_cliente():
