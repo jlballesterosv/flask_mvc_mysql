@@ -3,10 +3,16 @@ from flask.templating import render_template
 from src.models import Base , engine
 from flask_controller import FlaskControllerRegister
 
+from flask_cors import CORS, cross_origin
 
 
  
 app = Flask(__name__)
+
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 app.secret_key = 'llave_para_sesion'
 app.debug = True
 

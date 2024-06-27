@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from src.models import session, Base
+from src.models.categorias import Categorias
+from sqlalchemy_serializer import SerializerMixin
 
-class Productos(Base):    
+class Productos(Base, SerializerMixin):    
     __tablename__ = 'productos'
     id = Column(Integer, primary_key=True)
     descripcion = Column(String(300), unique=True, nullable=False)
@@ -18,7 +20,8 @@ class Productos(Base):
         self.categoria=categoria
         
     def obtener_todos():
-        productos = session.query(Productos).all()              
+        productos = session.query(Productos).join(Categorias).all()   
+        print(productos[0].to_dict())           
         return productos
 
     def agregar(producto):
